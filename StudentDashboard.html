@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Legal Study Platform</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, var(--color-background) 0%, rgba(33, 128, 141, 0.03) 100%);
+            color: var(--color-text);
+            padding: var(--space-24);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '📚';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 80px;
+            opacity: 0.05;
+        }
+
+        .header h1 {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-24);
+            margin-bottom: var(--space-24);
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(33, 128, 141, 0.08) 0%, transparent 70%);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card:hover::before {
+            transform: scale(1.3);
+        }
+
+        .stat-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-icon {
+            padding: var(--space-12);
+            border-radius: var(--radius-base);
+            margin-right: var(--space-16);
+        }
+
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); }
+        .stat-icon.green { background: rgba(34, 197, 94, 0.1); }
+        .stat-icon.yellow { background: rgba(245, 158, 11, 0.1); }
+        .stat-icon.purple { background: rgba(147, 51, 234, 0.1); }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .stat-info p:first-child {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-info p:last-child {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+        }
+
+        .main-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 var(--space-24);
+            gap: var(--space-24);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: var(--space-16) var(--space-4);
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: var(--color-text);
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            padding: var(--space-24);
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--space-16);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-16);
+            margin-bottom: var(--space-24);
+        }
+
+        .category-card {
+            padding: var(--space-16);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            background: var(--color-surface);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .category-icon {
+            font-size: 32px;
+            margin-right: var(--space-12);
+        }
+
+        .category-name {
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+        }
+
+        .category-count {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-12);
+            background: linear-gradient(135deg, rgba(33, 128, 141, 0.03) 0%, rgba(33, 128, 141, 0.01) 100%);
+            border-radius: var(--radius-base);
+            border: 1px solid var(--color-card-border);
+            transition: all 0.2s ease;
+        }
+
+        .activity-item:hover {
+            background: linear-gradient(135deg, rgba(33, 128, 141, 0.06) 0%, rgba(33, 128, 141, 0.02) 100%);
+            border-color: var(--color-primary);
+        }
+
+        .activity-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: var(--radius-full);
+            margin-right: var(--space-12);
+        }
+
+        .activity-text {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .activity-time {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            margin-top: var(--space-4);
+        }
+
+        .activity-score {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: #16a34a;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .material-card {
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-16);
+            background: var(--color-surface);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .material-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(33, 128, 141, 0.05) 0%, transparent 70%);
+            transition: transform 0.3s ease;
+        }
+
+        .material-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--color-primary);
+        }
+
+        .material-card:hover::after {
+            transform: scale(1.5);
+        }
+
+        .material-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-12);
+        }
+
+        .material-title {
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            flex: 1;
+        }
+
+        .material-badge {
+            font-size: var(--font-size-xs);
+            background: rgba(var(--color-brown-600-rgb), 0.1);
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-base);
+            margin-left: var(--space-8);
+        }
+
+        .material-category {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-12);
+        }
+
+        .material-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-12);
+        }
+
+        .material-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .material-rating svg {
+            width: 14px;
+            height: 14px;
+            fill: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .material-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--space-12);
+            border-top: 1px solid var(--color-card-border);
+        }
+
+        .material-downloads {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            background: transparent;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(var(--color-teal-500-rgb), 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .test-card {
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-20);
+            background: var(--color-surface);
+            transition: all 0.3s ease;
+        }
+
+        .test-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--color-primary);
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-12);
+        }
+
+        .test-title {
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+        }
+
+        .test-category {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .test-score-badge {
+            font-size: var(--font-size-xs);
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-base);
+            font-weight: 600;
+        }
+
+        .test-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-16);
+            padding: var(--space-12);
+            background: rgba(var(--color-teal-500-rgb), 0.03);
+            border-radius: var(--radius-base);
+        }
+
+        .test-detail-label {
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .btn {
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-8);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(33, 128, 141, 0.3);
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-24);
+            flex-wrap: wrap;
+            gap: var(--space-12);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+        }
+
+        select {
+            padding: var(--space-8) var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            background: var(--color-surface);
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-24);
+        }
+
+        .performance-card {
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            background: var(--color-surface);
+        }
+
+        .performance-title {
+            font-weight: 600;
+            margin-bottom: var(--space-16);
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: linear-gradient(135deg, rgba(33, 128, 141, 0.05) 0%, rgba(33, 128, 141, 0.02) 100%);
+            border-radius: var(--radius-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            border: 2px dashed var(--color-card-border);
+        }
+
+        .subject-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+        }
+
+        .subject-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subject-name {
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+        }
+
+        .subject-progress {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .progress-bar {
+            width: 80px;
+            height: 8px;
+            background: rgba(var(--color-brown-600-rgb), 0.1);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: var(--radius-full);
+            transition: width 0.3s ease;
+        }
+
+        .progress-value {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--space-12);
+            }
+
+            .categories-grid,
+            .materials-grid,
+            .tests-grid,
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                gap: var(--space-12);
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-controls {
+                width: 100%;
+            }
+
+            .filter-controls select {
+                flex: 1;
+            }
+        }
+
+        .news-list { margin-top: 20px; }
+.news-item {
+    background: #f2f7fd;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    padding: 12px 13px 7px 13px;
+    border: 1px solid #dde5ea;
+    box-shadow: 0 3px 18px 0 rgba(51,61,119,0.017);
+}
+.news-title { font-weight: 600; color: #145e99; }
+.news-summary { color: #556678; font-size: 13px; margin-top: 2px; }
+.news-meta { display: flex; justify-content: space-between; margin-top: 7px; font-size: 12px; color: #667788; }
+.news-tags {margin-top: 6px;}
+.news-tag { display: inline-block; background: #eafffc; color: #189cbf; font-size: 11px; border-radius: 20px; padding: 3px 8px; margin-right: 5px; }
+.see-all-link { color: #21808d; font-size: 13px; text-decoration: underline; cursor: pointer; margin-top: 4px;}
+
+.search-form {
+    margin-bottom: 20px;
+  }
+  .search-form input, .search-form select {
+    width: 100%;
+    padding: 7px;
+    border: 1.5px solid #d7e2eb;
+    border-radius: 7px;
+    margin-bottom: 9px;
+    font-size: 13px;
+    background: #fff;
+    color: #233044;
+    display: block;
+  }
+  .search-results-preview { margin-bottom: 13px;}
+  .search-result {
+    background: #fdfcf8;
+    border-radius: 11px;
+    margin-bottom: 14px;
+    padding: 10px 10px 7px 10px;
+    border: 1px solid #e7e8e9;
+  }
+  .search-type-badge {
+    display: inline-block;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    margin-right: 6px;
+    background: #f7f3ff;
+    color: #624fc6;
+  }
+  .search-title { font-size: 1rem; font-weight: 600; margin-top: 3px;}
+  .search-summary { color: #667792; font-size: 12px; margin-top: 3px;}
+  .search-meta { color: #8899ad; font-size: 11px; margin-top: 4px;}
+  .see-all-link { color: #21808d; font-size: 13px; text-decoration: underline; cursor: pointer;}
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📖 Student Dashboard</h1>
+            <p>Track your progress and access study materials</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Study Materials</p>
+                        <p>156</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Tests Taken</p>
+                        <p>23</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon yellow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                            <path d="M4 22h16"></path>
+                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Average Score</p>
+                        <p>84%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Study Hours</p>
+                        <p>127</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+            <div class="tabs">
+                <div class="tab active" data-tab="overview">Overview</div>
+                <div class="tab" data-tab="materials">Materials</div>
+                <div class="tab" data-tab="tests">Tests</div>
+                <div class="tab" data-tab="performance">Performance</div>
+                <div class="tab" data-tab="newsfeed">Legal News Feed</div>
+                <div class="tab" data-tab="legalsearch">Legal Search</div>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h3 class="section-title">Study Categories</h3>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-content">
+                            <span class="category-icon">⚖️</span>
+                            <div>
+                                <div class="category-name">Constitutional Law</div>
+                                <div class="category-count">45 materials</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-content">
+                            <span class="category-icon">🔍</span>
+                            <div>
+                                <div class="category-name">Criminal Law</div>
+                                <div class="category-count">38 materials</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-content">
+                            <span class="category-icon">📋</span>
+                            <div>
+                                <div class="category-name">Civil Law</div>
+                                <div class="category-count">32 materials</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-content">
+                            <span class="category-icon">📄</span>
+                            <div>
+                                <div class="category-name">Contract Law</div>
+                                <div class="category-count">28 materials</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-content">
+                            <span class="category-icon">🏠</span>
+                            <div>
+                                <div class="category-name">Property Law</div>
+                                <div class="category-count">25 materials</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-content">
+                            <span class="category-icon">🏢</span>
+                            <div>
+                                <div class="category-name">Corporate Law</div>
+                                <div class="category-count">22 materials</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title">Recent Activity</h3>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <div class="activity-dot"></div>
+                            <div>
+                                <div class="activity-text">Completed Constitutional Law Quiz</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <span class="activity-score">85%</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <div class="activity-dot"></div>
+                            <div>
+                                <div class="activity-text">Downloaded Criminal Law Notes</div>
+                                <div class="activity-time">1 day ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <div class="activity-dot"></div>
+                            <div>
+                                <div class="activity-text">Started Contract Law Test</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materials Tab -->
+            <div id="materials" class="tab-content">
+                <div class="filter-section">
+                    <h3 class="section-title">Study Materials</h3>
+                    <div class="filter-controls">
+                        <select>
+                            <option>All Categories</option>
+                            <option>Constitutional Law</option>
+                            <option>Criminal Law</option>
+                            <option>Civil Law</option>
+                        </select>
+                        <select>
+                            <option>All Types</option>
+                            <option>PDF</option>
+                            <option>Video</option>
+                            <option>Audio</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="materials-grid">
+                    <div class="material-card">
+                        <div class="material-header">
+                            <div class="material-title">Constitutional Law - Fundamental Rights</div>
+                            <span class="material-badge">PDF</span>
+                        </div>
+                        <div class="material-category">Constitutional Law</div>
+                        <div class="material-meta">
+                            <span>2.5 MB</span>
+                            <div class="material-rating">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span>4.8</span>
+                            </div>
+                        </div>
+                        <div class="material-footer">
+                            <span class="material-downloads">1,234 downloads</span>
+                            <button class="icon-btn" onclick="alert('Downloading PDF...')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="material-header">
+                            <div class="material-title">Criminal Law - IPC Sections</div>
+                            <span class="material-badge">Video</span>
+                        </div>
+                        <div class="material-category">Criminal Law</div>
+                        <div class="material-meta">
+                            <span>150 MB</span>
+                            <div class="material-rating">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span>4.6</span>
+                            </div>
+                        </div>
+                        <div class="material-footer">
+                            <span class="material-downloads">892 downloads</span>
+                            <button class="icon-btn" onclick="alert('Playing video...')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="material-card">
+                        <div class="material-header">
+                            <div class="material-title">Contract Law - Essential Elements</div>
+                            <span class="material-badge">PDF</span>
+                        </div>
+                        <div class="material-category">Contract Law</div>
+                        <div class="material-meta">
+                            <span>1.8 MB</span>
+                            <div class="material-rating">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span>4.7</span>
+                            </div>
+                        </div>
+                        <div class="material-footer">
+                            <span class="material-downloads">567 downloads</span>
+                            <button class="icon-btn" onclick="alert('Downloading PDF...')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tests Tab -->
+            <div id="tests" class="tab-content">
+                <div class="filter-section">
+                    <h3 class="section-title">Mock Tests</h3>
+                    <button class="btn btn-primary" style="width: auto;" onclick="alert('Starting new test...')">Take New Test</button>
+                </div>
+
+                <div class="tests-grid">
+                    <div class="test-card">
+                        <div class="test-header">
+                            <div>
+                                <div class="test-title">Constitutional Law Mock Test</div>
+                                <div class="test-category">Constitutional Law</div>
+                            </div>
+                            <span class="test-score-badge">Best: 85%</span>
+                        </div>
+                        <div class="test-details">
+                            <div>
+                                <span class="test-detail-label">Questions:</span> 50
+                            </div>
+                            <div>
+                                <span class="test-detail-label">Duration:</span> 1 hour
+                            </div>
+                            <div>
+                                <span class="test-detail-label">Attempts:</span> 3
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="alert('Starting test...')">Start Test</button>
+                    </div>
+
+                    <div class="test-card">
+                        <div class="test-header">
+                            <div>
+                                <div class="test-title">Criminal Law Practice Test</div>
+                                <div class="test-category">Criminal Law</div>
+                            </div>
+                            <span class="test-score-badge">Best: 78%</span>
+                        </div>
+                        <div class="test-details">
+                            <div>
+                                <span class="test-detail-label">Questions:</span> 40
+                            </div>
+                            <div>
+                                <span class="test-detail-label">Duration:</span> 45 minutes
+                            </div>
+                            <div>
+                                <span class="test-detail-label">Attempts:</span> 2
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="alert('Starting test...')">Start Test</button>
+                    </div>
+
+                    <div class="test-card">
+                        <div class="test-header">
+                            <div>
+                                <div class="test-title">Civil Law Assessment</div>
+                                <div class="test-category">Civil Law</div>
+                            </div>
+                            <span class="test-score-badge">Best: 92%</span>
+                        </div>
+                        <div class="test-details">
+                            <div>
+                                <span class="test-detail-label">Questions:</span> 35
+                            </div>
+                            <div>
+                                <span class="test-detail-label">Duration:</span> 40 minutes
+                            </div>
+                            <div>
+                                <span class="test-detail-label">Attempts:</span> 1
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="alert('Starting test...')">Start Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Tab -->
+            <div id="performance" class="tab-content">
+                <h3 class="section-title">Performance Analytics</h3>
+                <div class="performance-grid">
+                    <div class="performance-card">
+                        <h4 class="performance-title">Score Trends</h4>
+                        <div class="chart-placeholder">
+                            <p>📊 Performance chart visualization</p>
+                        </div>
+                    </div>
+
+                    <div class="performance-card">
+                        <h4 class="performance-title">Subject Strengths</h4>
+                        <div class="subject-list">
+                            <div class="subject-item">
+                                <span class="subject-name">Constitutional Law</span>
+                                <div class="subject-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 92%"></div>
+                                    </div>
+                                    <span class="progress-value">92%</span>
+                                </div>
+                            </div>
+                            <div class="subject-item">
+                                <span class="subject-name">Criminal Law</span>
+                                <div class="subject-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 85%"></div>
+                                    </div>
+                                    <span class="progress-value">85%</span>
+                                </div>
+                            </div>
+                            <div class="subject-item">
+                                <span class="subject-name">Civil Law</span>
+                                <div class="subject-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 78%"></div>
+                                    </div>
+                                    <span class="progress-value">78%</span>
+                                </div>
+                            </div>
+                            <div class="subject-item">
+                                <span class="subject-name">Contract Law</span>
+                                <div class="subject-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 71%"></div>
+                                    </div>
+                                    <span class="progress-value">71%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div id="newsfeed" class="tab-content">
+    <h3 class="section-title">Legal News Feed</h3>
+    <div class="news-list">
+        <div class="news-item">
+            <div class="news-title">Supreme Court Landmark Ruling on Digital Privacy Rights</div>
+            <div class="news-summary">In a historic judgment, the Supreme Court has established new precedents for digital privacy protection, affecting how tech companies handle user data.</div>
+            <div class="news-meta">
+                <span>Constitutional Law</span>
+                <span>16 Jan 2024</span>
+            </div>
+            <div class="news-tags">
+                <span class="news-tag">Privacy</span>
+                <span class="news-tag">Technology</span>
+            </div>
+        </div>
+        <div class="news-item">
+            <div class="news-title">New Amendment to Criminal Procedure Code Approved</div>
+            <div class="news-summary">Parliament has approved significant amendments to the Criminal Procedure Code, introducing faster trial mechanisms and enhanced victim protection.</div>
+            <div class="news-meta">
+                <span>Criminal Law</span>
+                <span>15 Jan 2024</span>
+            </div>
+            <div class="news-tags">
+                <span class="news-tag">Criminal Law</span>
+                <span class="news-tag">Amendment</span>
+            </div>
+        </div>
+        <div class="news-item">
+            <div class="news-title">Delhi High Court Verdict on Property Disputes</div>
+            <div class="news-summary">The Delhi High Court has delivered an important judgment clarifying the rights of property owners in cases of unauthorized constructions.</div>
+            <div class="news-meta">
+                <span>Property Law</span>
+                <span>14 Jan 2024</span>
+            </div>
+            <div class="news-tags">
+                <span class="news-tag">Property</span>
+                <span class="news-tag">High Court</span>
+            </div>
+        </div>
+    </div>
+    <div class="see-all-link" onclick="alert('Open full news feed page');">See all news &rarr;</div>
+</div>
+
+<div id="legalsearch" class="tab-content">
+  <h3 class="section-title">Legal Search</h3>
+  <form class="search-form" id="dashboardSearchForm" onsubmit="event.preventDefault();dashboardApplySearch();">
+    <input type="text" id="dashboardSearchInput" placeholder="Search legal documents, cases, laws...">
+    <select id="dashboardCategorySelect">
+      <option value="all">All Categories</option>
+      <option value="constitutional">Constitutional Law</option>
+      <option value="criminal">Criminal Law</option>
+      <option value="civil">Civil Law</option>
+      <option value="property">Property Law</option>
+      <option value="tax">Tax Law</option>
+      <option value="labor">Labor Law</option>
+      <option value="environmental">Environmental Law</option>
+      <option value="corporate">Corporate Law</option>
+      <option value="family">Family Law</option>
+    </select>
+  </form>
+  <div class="search-results-preview" id="dashboardSearchResults"></div>
+  <div class="see-all-link" onclick="alert('Open full legal search page');">See full search &rarr;</div>
+</div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Category card click handlers
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const categoryName = card.querySelector('.category-name').textContent;
+                alert(`Opening ${categoryName} materials...`);
+            });
+        });
+
+        const legalSearchData = [
+  {
+    title: 'Supreme Court Judgment on Digital Privacy Rights',
+    type: 'Judgment',
+    summary: 'Landmark judgment establishing digital privacy as a fundamental right under Article 21.',
+    category: 'Constitutional Law'
+  },
+  {
+    title: 'Criminal Procedure Code Amendment Act 2024',
+    type: 'Legislation',
+    summary: 'New amendments to CrPC introducing faster trial mechanisms.',
+    category: 'Criminal Law'
+  },
+  {
+    title: 'Delhi High Court Guidelines on Property Disputes',
+    type: 'Guidelines',
+    summary: 'Comprehensive guidelines for property disputes in Delhi.',
+    category: 'Property Law'
+  }
+];
+
+function dashboardRenderSearchResults(results) {
+  const container = document.getElementById('dashboardSearchResults');
+  if (!container) return;
+  container.innerHTML = results.slice(0,3).map(res => `
+    <div class="search-result">
+      <span class="search-type-badge">${res.type}</span>
+      <span class="search-title">${res.title}</span>
+      <div class="search-summary">${res.summary}</div>
+      <div class="search-meta">${res.category}</div>
+    </div>
+  `).join('');
+}
+
+function dashboardApplySearch() {
+  const term = document.getElementById('dashboardSearchInput').value.toLowerCase();
+  const cat = document.getElementById('dashboardCategorySelect').value;
+  let filtered = legalSearchData.filter(item =>
+    (term === '' || item.title.toLowerCase().includes(term) || item.summary.toLowerCase().includes(term))
+    && (cat === 'all' || item.category.toLowerCase().includes(cat))
+  );
+  dashboardRenderSearchResults(filtered);
+}
+
+document.getElementById('dashboardSearchInput').addEventListener('input', dashboardApplySearch);
+document.getElementById('dashboardCategorySelect').addEventListener('change', dashboardApplySearch);
+window.addEventListener('DOMContentLoaded', dashboardApplySearch);
+    </script>
+</body>
+</html>
