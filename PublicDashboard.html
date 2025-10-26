@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Legal Help - Public Dashboard</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background: linear-gradient(135deg, var(--color-background) 0%, rgba(33, 128, 141, 0.03) 100%);
+            color: var(--color-text);
+            padding: var(--space-24);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '⚖️';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 80px;
+            opacity: 0.05;
+        }
+
+        .header h1 {
+            font-size: var(--font-size-3xl);
+            font-weight: 600;
+            margin-bottom: var(--space-8);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-24);
+            margin-bottom: var(--space-24);
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(33, 128, 141, 0.08) 0%, transparent 70%);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card:hover::before {
+            transform: scale(1.3);
+        }
+
+        .stat-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-icon {
+            padding: var(--space-12);
+            border-radius: var(--radius-base);
+            margin-right: var(--space-16);
+        }
+
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); }
+        .stat-icon.green { background: rgba(34, 197, 94, 0.1); }
+        .stat-icon.yellow { background: rgba(245, 158, 11, 0.1); }
+        .stat-icon.purple { background: rgba(147, 51, 234, 0.1); }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .stat-info p:first-child {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-info p:last-child {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+        }
+
+        .main-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 var(--space-24);
+            gap: var(--space-24);
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: var(--space-16) var(--space-4);
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: var(--color-text);
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            padding: var(--space-24);
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-section {
+            background: linear-gradient(135deg, rgba(33, 128, 141, 0.05) 0%, rgba(33, 128, 141, 0.02) 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            border: 1px solid var(--color-card-border);
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: var(--space-12);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+        }
+
+        .search-input-wrapper svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--color-text-secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--space-8) var(--space-12) var(--space-8) 40px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            background: var(--color-surface);
+            color: var(--color-text);
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        select {
+            padding: var(--space-8) var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            background: var(--color-surface);
+            color: var(--color-text);
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(33, 128, 141, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(var(--color-brown-600-rgb), 0.12);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(var(--color-brown-600-rgb), 0.2);
+        }
+
+        .lawyers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--space-24);
+        }
+
+        .lawyer-card {
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            background: var(--color-surface);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lawyer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(180deg, var(--color-primary), var(--color-primary-hover));
+            transition: height 0.3s ease;
+        }
+
+        .lawyer-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .lawyer-card:hover::before {
+            height: 100%;
+        }
+
+        .lawyer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-16);
+        }
+
+        .lawyer-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .lawyer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            object-fit: cover;
+            margin-right: var(--space-12);
+            border: 2px solid var(--color-card-border);
+        }
+
+        .lawyer-name {
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .verified-badge {
+            width: 16px;
+            height: 16px;
+            color: #16a34a;
+        }
+
+        .lawyer-specialization {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .rating svg {
+            width: 16px;
+            height: 16px;
+            fill: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .rating-value {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+
+        .lawyer-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+            margin-bottom: var(--space-16);
+            padding-bottom: var(--space-16);
+            border-bottom: 1px solid var(--color-card-border);
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            gap: var(--space-8);
+        }
+
+        .detail-item svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .lawyer-about {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--space-16);
+        }
+
+        .lawyer-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            margin-bottom: var(--space-16);
+            padding: var(--space-12);
+            background: rgba(var(--color-teal-500-rgb), 0.05);
+            border-radius: var(--radius-base);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-value {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+        }
+
+        .lawyer-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-4);
+        }
+
+        .price-amount {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+        }
+
+        .price-unit {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            background: transparent;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(var(--color-teal-500-rgb), 0.1);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .consultation-card {
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-16);
+            background: var(--color-surface);
+            transition: all 0.3s ease;
+        }
+
+        .consultation-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .consultation-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-16);
+        }
+
+        .consultation-info h4 {
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+        }
+
+        .consultation-info p {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .badge {
+            padding: var(--space-4) var(--space-12);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .badge.scheduled {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+        }
+
+        .badge.completed {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .badge.cancelled {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        .consultation-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-16);
+            margin-bottom: var(--space-16);
+            padding-bottom: var(--space-16);
+            border-bottom: 1px solid var(--color-card-border);
+        }
+
+        .consultation-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text-links {
+            display: flex;
+            gap: var(--space-16);
+        }
+
+        .text-link {
+            color: var(--color-primary);
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            transition: color 0.2s ease;
+        }
+
+        .text-link:hover {
+            color: var(--color-primary-hover);
+            text-decoration: underline;
+        }
+
+        .review-card {
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-16);
+            background: var(--color-surface);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-16);
+        }
+
+        .review-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            object-fit: cover;
+            margin-right: var(--space-12);
+        }
+
+        .review-name {
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+        }
+
+        .review-category {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .stars {
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        .stars svg {
+            width: 16px;
+            height: 16px;
+            fill: #f59e0b;
+            color: #f59e0b;
+        }
+
+        .review-text {
+            color: var(--color-text);
+            line-height: 1.6;
+            margin-bottom: var(--space-16);
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-24);
+        }
+
+        .section-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: var(--space-24);
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--space-12);
+            }
+
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lawyers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .consultation-details {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                gap: var(--space-12);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔍 Find Legal Help</h1>
+            <p>Connect with qualified lawyers for your legal needs</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Available Lawyers</p>
+                        <p>1,247</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Cases Resolved</p>
+                        <p>12,456</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon yellow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Average Rating</p>
+                        <p>4.7</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-icon purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <p>Avg Response</p>
+                        <p>2 hrs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+            <div class="tabs">
+                <div class="tab active" data-tab="find-lawyers">Find Lawyers</div>
+                <div class="tab" data-tab="consultations">Consultations</div>
+                <div class="tab" data-tab="reviews">Reviews</div>
+            </div>
+
+            <!-- Find Lawyers Tab -->
+            <div id="find-lawyers" class="tab-content active">
+                <div class="search-section">
+                    <div class="search-grid">
+                        <div class="search-input-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input type="text" id="searchInput" class="search-input" placeholder="Search lawyers...">
+                        </div>
+                        <select id="specializationFilter">
+                            <option value="all">All Specializations</option>
+                            <option value="criminal">Criminal Law</option>
+                            <option value="corporate">Corporate Law</option>
+                            <option value="family">Family Law</option>
+                            <option value="property">Property Law</option>
+                        </select>
+                        <select id="locationFilter">
+                            <option value="all">All Locations</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="ahmedabad">Ahmedabad</option>
+                            <option value="hyderabad">Hyderabad</option>
+                        </select>
+                        <button class="btn btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
+                            Filter
+                        </button>
+                    </div>
+                </div>
+
+                <div id="lawyersGrid" class="lawyers-grid"></div>
+            </div>
+
+            <!-- Consultations Tab -->
+            <div id="consultations" class="tab-content">
+                <div class="filter-section">
+                    <h3 class="section-title">My Consultations</h3>
+                    <select>
+                        <option>All Consultations</option>
+                        <option>Scheduled</option>
+                        <option>Completed</option>
+                        <option>Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="consultation-card">
+                    <div class="consultation-header">
+                        <div class="consultation-info">
+                            <h4>Adv. Priya Sharma</h4>
+                            <p>Criminal Law</p>
+                            <p style="color: var(--color-text); font-size: var(--font-size-base);">Initial Consultation</p>
+                        </div>
+                        <span class="badge scheduled">Scheduled</span>
+                    </div>
+                    <div class="consultation-details">
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            2024-01-20
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            2:00 PM
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            45 minutes
+                        </div>
+                    </div>
+                    <div class="consultation-actions">
+                        <div class="text-links">
+                            <button class="text-link">Join Meeting</button>
+                            <button class="text-link">Reschedule</button>
+                        </div>
+                        <button class="icon-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="consultation-card">
+                    <div class="consultation-header">
+                        <div class="consultation-info">
+                            <h4>Adv. Rajesh Kumar</h4>
+                            <p>Corporate Law</p>
+                            <p style="color: var(--color-text); font-size: var(--font-size-base);">Follow-up</p>
+                        </div>
+                        <span class="badge completed">Completed</span>
+                    </div>
+                    <div class="consultation-details">
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            2024-01-18
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            10:30 AM
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            30 minutes
+                        </div>
+                    </div>
+                    <div class="consultation-actions">
+                        <div class="text-links">
+                            <button class="text-link">Leave Review</button>
+                        </div>
+                        <button class="icon-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div id="reviews" class="tab-content">
+                <div class="filter-section">
+                    <h3 class="section-title">My Reviews</h3>
+                    <button class="btn btn-primary">Write Review</button>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-profile">
+                            <img src="https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Lawyer" class="review-avatar">
+                            <div>
+                                <div class="review-name">Adv. Priya Sharma</div>
+                                <div class="review-category">Criminal Law</div>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        Excellent service! Very professional and helped me understand my legal options clearly. 
+                        Would definitely recommend to others.
+                    </p>
+                    <div class="review-footer">
+                        <span>Posted on January 15, 2024</span>
+                        <button class="text-link">Edit Review</button>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-profile">
+                            <img src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Lawyer" class="review-avatar">
+                            <div>
+                                <div class="review-name">Adv. Rajesh Kumar</div>
+                                <div class="review-category">Corporate Law</div>
+                            </div>
+                        </div>
+                        <div class="stars">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">
+                        Great expertise in corporate matters. Helped navigate complex merger documents efficiently.
+                        Highly recommended for business legal needs.
+                    </p>
+                    <div class="review-footer">
+                        <span>Posted on January 10, 2024</span>
+                        <button class="text-link">Edit Review</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lawyers = [
+            {
+                id: 1,
+                name: 'Adv. Priya Sharma',
+                specialization: 'Criminal Law',
+                experience: 8,
+                location: 'Delhi',
+                rating: 4.9,
+                reviews: 156,
+                hourlyRate: 2500,
+                avatar: 'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=400',
+                verified: true,
+                languages: ['Hindi', 'English'],
+                about: 'Experienced criminal lawyer with expertise in white-collar crimes and corporate fraud.',
+                casesSolved: 234,
+                successRate: 92
+            },
+            {
+                id: 2,
+                name: 'Adv. Rajesh Kumar',
+                specialization: 'Corporate Law',
+                experience: 12,
+                location: 'Mumbai',
+                rating: 4.8,
+                reviews: 203,
+                hourlyRate: 3000,
+                avatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400',
+                verified: true,
+                languages: ['English', 'Marathi'],
+                about: 'Corporate law expert specializing in mergers, acquisitions, and compliance.',
+                casesSolved: 187,
+                successRate: 89
+            },
+            {
+                id: 3,
+                name: 'Adv. Meera Patel',
+                specialization: 'Family Law',
+                experience: 6,
+                location: 'Ahmedabad',
+                rating: 4.7,
+                reviews: 89,
+                hourlyRate: 2000,
+                avatar: 'https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg?auto=compress&cs=tinysrgb&w=400',
+                verified: true,
+                languages: ['Gujarati', 'Hindi', 'English'],
+                about: 'Family law specialist with focus on divorce, custody, and matrimonial disputes.',
+                casesSolved: 145,
+                successRate: 88
+            },
+            {
+                id: 4,
+                name: 'Adv. Suresh Reddy',
+                specialization: 'Property Law',
+                experience: 15,
+                location: 'Hyderabad',
+                rating: 4.6,
+                reviews: 124,
+                hourlyRate: 2800,
+                avatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400',
+                verified: true,
+                languages: ['Telugu', 'English'],
+                about: 'Property law veteran with extensive experience in real estate transactions.',
+                casesSolved: 298,
+                successRate: 91
+            }
+        ];
+
+        function renderLawyers(lawyersToRender) {
+            const grid = document.getElementById('lawyersGrid');
+            
+            if (lawyersToRender.length === 0) {
+                grid.innerHTML = '<div class="no-results">No lawyers found matching your criteria.</div>';
+                return;
+            }
+
+            grid.innerHTML = lawyersToRender.map(lawyer => `
+                <div class="lawyer-card">
+                    <div class="lawyer-header">
+                        <div class="lawyer-profile">
+                            <img src="${lawyer.avatar}" alt="${lawyer.name}" class="lawyer-avatar">
+                            <div>
+                                <div class="lawyer-name">
+                                    ${lawyer.name}
+                                    ${lawyer.verified ? `
+                                        <svg class="verified-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                        </svg>
+                                    ` : ''}
+                                </div>
+                                <div class="lawyer-specialization">${lawyer.specialization}</div>
+                            </div>
+                        </div>
+                        <div class="rating">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            <span class="rating-value">${lawyer.rating}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lawyer-details">
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            ${lawyer.location}
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            ${lawyer.experience} years experience
+                        </div>
+                        <div class="detail-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            ${lawyer.reviews} reviews
+                        </div>
+                    </div>
+                    
+                    <p class="lawyer-about">${lawyer.about}</p>
+                    
+                    <div class="lawyer-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Cases Won</div>
+                            <div class="stat-value">${lawyer.casesSolved}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Success Rate</div>
+                            <div class="stat-value">${lawyer.successRate}%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="lawyer-footer">
+                        <div class="price">
+                            <span class="price-amount">₹${lawyer.hourlyRate}</span>
+                            <span class="price-unit">/hour</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="icon-btn" onclick="alert('Message ${lawyer.name}')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </button>
+                            <button class="btn btn-primary" onclick="handleConsultationRequest(${lawyer.id})">
+                                Request Consultation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterLawyers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const specialization = document.getElementById('specializationFilter').value;
+            const location = document.getElementById('locationFilter').value;
+
+            const filtered = lawyers.filter(lawyer => {
+                const matchesSearch = lawyer.name.toLowerCase().includes(searchTerm) ||
+                                    lawyer.specialization.toLowerCase().includes(searchTerm);
+                const matchesSpecialization = specialization === 'all' ||
+                                            lawyer.specialization.toLowerCase().includes(specialization);
+                const matchesLocation = location === 'all' ||
+                                       lawyer.location.toLowerCase() === location;
+
+                return matchesSearch && matchesSpecialization && matchesLocation;
+            });
+
+            renderLawyers(filtered);
+        }
+
+        function handleConsultationRequest(lawyerId) {
+            const lawyer = lawyers.find(l => l.id === lawyerId);
+            alert(`Consultation request sent to ${lawyer.name}. You will receive a confirmation email shortly.`);
+        }
+
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Search and filter
+        document.getElementById('searchInput').addEventListener('input', filterLawyers);
+        document.getElementById('specializationFilter').addEventListener('change', filterLawyers);
+        document.getElementById('locationFilter').addEventListener('change', filterLawyers);
+
+        // Initial render
+        renderLawyers(lawyers);
+    </script>
+</body>
+</html>
